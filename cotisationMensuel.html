@@ -13,13 +13,13 @@
           background-color: white;
           padding: 30px;
           border-radius: 10px;
-          max-width: 500px;
+          max-width: 700px;
           margin: auto;
           box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .h2title { 
           text-align: center; 
-          color: blue;
+          color: #011f3d;
           text-transform: uppercase;
         }
         .connex{
@@ -28,17 +28,36 @@
         }
         input { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; }
         button {
-          background-color: #4CAF50; color: white; padding: 12px; border: none;
-          border-radius: 5px; margin-top: 15px; width: 100%; cursor: pointer;
+          display: flex;
+          background-color: #003366;
+          color: white; 
+          padding: 8px; 
+          border: none;
+          border-radius: 5px; 
+          margin-top: 5px; 
+          width: 20%; 
+          cursor: pointer;
+          justify-content: center;
+         
         }
-        button:hover { background-color: #45a049; }
-        .message-erreur { color: red; text-align: center; margin-top: 20px; }
+        .btn1{
+            color: white;
+            background-color: #003366;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+        }
+        button:hover { background-color: #0e0af3; }
+        .message-erreur { color: red; text-align: center; margin-top: 20px; font-family: Arial, Helvetica, sans-serif;}
         .contribution-page { display: none; }
         .voir-liste-button {
           background-color: #f2b600; margin-top: 10px;
         }
         .voir-liste-button:hover {
-          background-color: #e59d00;
+          background-color: #4514f7;
         }
         .hidden { display: none; }
         .logoconnexion{
@@ -117,7 +136,7 @@
         <label>Mot de Passe :</label>
         <input type="password" id="motdepasse" required>
         <input type="checkbox" id="voir-mdp" onclick="afficherMotDePasse()">
-        <button onclick="verifierConnexion()">Se Connecter</button>
+        <button onclick="verifierConnexion()" class="btn1">Se Connecter</button>
         <div class="message-erreur" id="message-erreur"></div>
       </div>
       
@@ -142,7 +161,7 @@
             </select>
             <label>Montant de la contribution :</label>
             <input type="number" id="montant_contrib" required>
-            <button type="submit">Ajouter Contribution</button>
+            <button type="submit" class="btn1">Ajouter Contribution</button>
           </form>
         </div><br><br>
       
@@ -233,7 +252,9 @@
       
               let suppBtn = document.createElement('button');
               suppBtn.textContent = 'Supprimer';
-              suppBtn.style.marginLeft = '10px';
+              suppBtn.style.marginLeft = '5px';
+              suppBtn.style.marginLeft ='150px'
+              suppBtn.style.marginTop ='-30px'
               suppBtn.onclick = () => supprimerContribution(index);
       
               li.appendChild(modifBtn);
@@ -258,7 +279,7 @@
           totalListe.innerHTML = '';
           for (let mois in totalParMois) {
             let li = document.createElement('li');
-            li.textContent = `${mois} : ${totalParMois[mois]} FCFA`;
+            li.textContent = `${mois} : ${totalParMois[mois]} FC`;
             totalListe.appendChild(li);
           }
         }
