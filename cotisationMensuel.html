@@ -7,6 +7,58 @@
     <title>Genie_informatique_L2_UAC</title>
     <link rel="stylesheet" href="Assets/style.css">
     <link rel="stylesheet" href="Assets/script.js">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f2f2f2; padding: 20px; }
+        .form-container {
+          background-color: white;
+          padding: 30px;
+          border-radius: 10px;
+          max-width: 500px;
+          margin: auto;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .h2title { 
+          text-align: center; 
+          color: blue;
+          text-transform: uppercase;
+        }
+        .connex{
+          text-align: center;
+          color: blue;
+        }
+        input { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        button {
+          background-color: #4CAF50; color: white; padding: 12px; border: none;
+          border-radius: 5px; margin-top: 15px; width: 100%; cursor: pointer;
+        }
+        button:hover { background-color: #45a049; }
+        .message-erreur { color: red; text-align: center; margin-top: 20px; }
+        .contribution-page { display: none; }
+        .voir-liste-button {
+          background-color: #f2b600; margin-top: 10px;
+        }
+        .voir-liste-button:hover {
+          background-color: #e59d00;
+        }
+        .hidden { display: none; }
+        .logoconnexion{
+          display: flex;
+          justify-content: space-between; 
+        }
+        .imgacl{
+          display: flex;
+          justify-content: center;
+          
+        }
+        .grosTitle{
+          margin-left: 20px;
+          color: blue;
+        }
+        label{
+          font-size: 1.2rem;
+          color: blue;
+        }
+      </style>
 </head>
 <body>
     <header>
@@ -46,5 +98,196 @@
             </div>
         </nav>
     </header><br><br><br>
+
+    <div class="logoconnexion">
+        <div>
+          <img src="logo.png" alt="" width="80px">
+        </div>
+        <div class="grosTitle">
+          <marquee behavior="scroll" direction="right" style="font-size: 2rem; font-weight:bold;color:blue">COMPUTER ENGENEERING L2 UAC</marquee>
+        </div>
+        <div>
+          <img src="logo.png" alt="" width="80px">
+        </div>
+      </div><br><br><br>
+      <div class="form-container" id="form-connexion">
+        <h2 class="connex">Connexion</h2>
+        <label>Identifiant :</label>
+        <input type="text" id="identifiant" required>
+        <label>Mot de Passe :</label>
+        <input type="password" id="motdepasse" required>
+        <input type="checkbox" id="voir-mdp" onclick="afficherMotDePasse()">
+        <button onclick="verifierConnexion()">Se Connecter</button>
+        <div class="message-erreur" id="message-erreur"></div>
+      </div>
+      
+      <div class="imgacl">
+        <a href=""><img src="accueil.png" alt="" width="45px" title="accueil"></a>
+      </div>
+      
+      <div class="contribution-page" id="contribution-page">
+        <div class="form-container">
+          <h2 class="h2title">Contribution Mensuelle des Étudiants</h2>
+      
+          <form id="form-contribution">
+            <label>Nom de l'élève :</label>
+            <input type="text" id="nom_contrib" required>
+            <label>Mois :</label>
+            <select id="mois_contrib" required>
+              <option value="">--Sélectionner--</option>
+              <option>Janvier</option><option>Février</option><option>Mars</option>
+              <option>Avril</option><option>Mai</option><option>Juin</option>
+              <option>Juillet</option><option>Août</option><option>Septembre</option>
+              <option>Octobre</option><option>Novembre</option><option>Décembre</option>
+            </select>
+            <label>Montant de la contribution :</label>
+            <input type="number" id="montant_contrib" required>
+            <button type="submit">Ajouter Contribution</button>
+          </form>
+        </div><br><br>
+      
+        <div class="form-container">
+          <h3 style="color: blue;">Liste des Contributions</h3>
+          <ul id="liste-contributions"></ul>
+        </div><br>
+      
+        <div class="form-container">
+          <h3 style="color: red;">Total des Contributions par Mois</h3>
+          <ul id="total-contributions"></ul>
+        </div>
+      </div>
+      
+      <script>
+        const identifiants = {
+          "admin": "adminpass",
+          "Steven": "POLY156/2022", "Djoe": "POLY144/2022", "Jospin": "POLY141/2022",
+          "Charmante": "POLY143/2022", "Victoire": "POLY122/2022",
+          "John": "POLY143/2022", "Ishara": "POLY163/2022",
+          "Bienvenue": "POLY154/2022", "Blaise": "POLY174/2022", "Ponyo": "PREP53/2019", "Arthur":"POLY371/2024",
+          "Clemence": "POLY115/2022", "Ariane": "POLY/2022", "GlodyG": "POLY150/2022", "GlodyF": "POLY123/2022", "Precieuse": "POLY/2022",
+          "Parfait": "POLY/2022", "Telemuka": "POLY127/2022"
+        };
+      
+        let utilisateurConnecte = null;
+      
+        function verifierConnexion() {
+          const id = document.getElementById('identifiant').value;
+          const mdp = document.getElementById('motdepasse').value;
+          const erreur = document.getElementById('message-erreur');
+      
+          if (identifiants[id] && identifiants[id] === mdp) {
+            utilisateurConnecte = id;
+            document.getElementById('form-connexion').style.display = 'none';
+            document.getElementById('contribution-page').style.display = 'block';
+      
+            if (id !== 'admin') {
+              document.getElementById('form-contribution').style.display = 'none';
+            }
+      
+            afficherContributions();
+          } else {
+            erreur.textContent = "Identifiants incorrects.";
+          }
+        }
+      
+        let contributionEnCoursIndex = null;
+      
+        function enregistrerContribution(contribution) {
+          let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+          contributions.push(contribution);
+          localStorage.setItem('contributions', JSON.stringify(contributions));
+        }
+      
+        function mettreAJourContribution(index, contribution) {
+          let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+          contributions[index] = contribution;
+          localStorage.setItem('contributions', JSON.stringify(contributions));
+        }
+      
+        function supprimerContribution(index) {
+          let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+          contributions.splice(index, 1);
+          localStorage.setItem('contributions', JSON.stringify(contributions));
+          afficherContributions();
+        }
+      
+        function afficherContributions() {
+          let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+          let liste = document.getElementById('liste-contributions');
+          liste.innerHTML = '';
+      
+          contributions.forEach((contrib, index) => {
+            let li = document.createElement('li');
+            li.textContent = `${contrib.nom} - Mois : ${contrib.mois} - Montant : ${contrib.montant} FC`;
+      
+            if (utilisateurConnecte === 'admin') {
+              let modifBtn = document.createElement('button');
+              modifBtn.textContent = 'Modifier';
+              modifBtn.onclick = () => {
+                document.getElementById('nom_contrib').value = contrib.nom;
+                document.getElementById('mois_contrib').value = contrib.mois;
+                document.getElementById('montant_contrib').value = contrib.montant;
+                contributionEnCoursIndex = index;
+                document.querySelector('#form-contribution button').textContent = 'Mettre à jour Contribution';
+              };
+      
+              let suppBtn = document.createElement('button');
+              suppBtn.textContent = 'Supprimer';
+              suppBtn.style.marginLeft = '10px';
+              suppBtn.onclick = () => supprimerContribution(index);
+      
+              li.appendChild(modifBtn);
+              li.appendChild(suppBtn);
+            }
+      
+            liste.appendChild(li);
+          });
+      
+          afficherTotalParMois();
+        }
+      
+        function afficherTotalParMois() {
+          let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+          let totalParMois = {};
+          contributions.forEach(contrib => {
+            if (!totalParMois[contrib.mois]) totalParMois[contrib.mois] = 0;
+            totalParMois[contrib.mois] += parseFloat(contrib.montant);
+          });
+      
+          let totalListe = document.getElementById('total-contributions');
+          totalListe.innerHTML = '';
+          for (let mois in totalParMois) {
+            let li = document.createElement('li');
+            li.textContent = `${mois} : ${totalParMois[mois]} FCFA`;
+            totalListe.appendChild(li);
+          }
+        }
+      
+        document.getElementById('form-contribution').addEventListener('submit', function(event) {
+          event.preventDefault();
+          let contribution = {
+            nom: document.getElementById('nom_contrib').value,
+            mois: document.getElementById('mois_contrib').value,
+            montant: document.getElementById('montant_contrib').value
+          };
+      
+          if (contributionEnCoursIndex !== null) {
+            mettreAJourContribution(contributionEnCoursIndex, contribution);
+            contributionEnCoursIndex = null;
+            document.querySelector('#form-contribution button').textContent = 'Ajouter Contribution';
+          } else {
+            enregistrerContribution(contribution);
+          }
+      
+          afficherContributions();
+          document.getElementById('form-contribution').reset();
+        });
+      
+        function afficherMotDePasse(){
+          const mdpInput=document.getElementById("motdepasse");
+          mdpInput.type = mdpInput.type === "password" ? "text" : "password";
+        }
+      </script>
+      
 </body>
 </html>
