@@ -35,7 +35,7 @@
           border: none;
           border-radius: 5px; 
           margin-top: 5px; 
-          width: 20%; 
+          width: 100%; 
           cursor: pointer;
           justify-content: center;
          
@@ -122,6 +122,7 @@
         <div>
           <img src="logo.png" alt="" width="80px">
         </div>
+        <!-- defilement du titre -->
         <div class="grosTitle">
           <marquee behavior="scroll" direction="right" style="font-size: 2rem; font-weight:bold;color:blue">COMPUTER ENGENEERING L2 UAC</marquee>
         </div>
@@ -167,7 +168,19 @@
       
         <div class="form-container">
           <h3 style="color: blue;">Liste des Contributions</h3>
-          <ul id="liste-contributions"></ul>
+          <table border="1" width="100%" style="border-collapse: collapse;" id="table-contributions">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Mois</th>
+                <th>Montant (FC)</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="body-contributions">
+
+            </tbody>
+          </table>
         </div><br>
       
         <div class="form-container">
@@ -231,41 +244,45 @@
         }
       
         function afficherContributions() {
-          let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
-          let liste = document.getElementById('liste-contributions');
-          liste.innerHTML = '';
-      
-          contributions.forEach((contrib, index) => {
-            let li = document.createElement('li');
-            li.textContent = `${contrib.nom} - Mois : ${contrib.mois} - Montant : ${contrib.montant} FC`;
-      
-            if (utilisateurConnecte === 'admin') {
-              let modifBtn = document.createElement('button');
-              modifBtn.textContent = 'Modifier';
-              modifBtn.onclick = () => {
-                document.getElementById('nom_contrib').value = contrib.nom;
-                document.getElementById('mois_contrib').value = contrib.mois;
-                document.getElementById('montant_contrib').value = contrib.montant;
-                contributionEnCoursIndex = index;
-                document.querySelector('#form-contribution button').textContent = 'Mettre à jour Contribution';
-              };
-      
-              let suppBtn = document.createElement('button');
-              suppBtn.textContent = 'Supprimer';
-              suppBtn.style.marginLeft = '5px';
-              suppBtn.style.marginLeft ='150px'
-              suppBtn.style.marginTop ='-30px'
-              suppBtn.onclick = () => supprimerContribution(index);
-      
-              li.appendChild(modifBtn);
-              li.appendChild(suppBtn);
-            }
-      
-            liste.appendChild(li);
-          });
-      
-          afficherTotalParMois();
-        }
+  let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+  let tbody = document.getElementById('body-contributions');
+  tbody.innerHTML = '';
+
+  contributions.forEach((contrib, index) => {
+    let row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td>${contrib.nom}</td>
+      <td>${contrib.mois}</td>
+      <td>${contrib.montant}</td>
+      <td>
+        <button onclick="modifierContribution(${index})">Modifier</button>
+        <button onclick="supprimerEtRafraichir(${index})">Supprimer</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  afficherTotalParMois();
+}
+
+function modifierContribution(index) {
+  let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
+  let contrib = contributions[index];
+  document.getElementById('nom_contrib').value = contrib.nom;
+  document.getElementById('mois_contrib').value = contrib.mois;
+  document.getElementById('montant_contrib').value = contrib.montant;
+  document.querySelector('#form-contribution button').textContent = 'Mettre à jour Contribution';
+  contributionEnCoursIndex = index;
+  document.getElementById('form-contribution').style.display = 'block';
+}
+
+function supprimerEtRafraichir(index) {
+  if (confirm("Voulez-vous vraiment supprimer cette contribution ?")) {
+    supprimerContribution(index);
+    afficherContributions();
+  }
+}
       
         function afficherTotalParMois() {
           let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
@@ -301,7 +318,7 @@
           }
       
           afficherContributions();
-          document.getElementById('form-contribution').reset();
+          document.getElementById('form-contribution').reset(); 
         });
       
         function afficherMotDePasse(){
