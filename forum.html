@@ -7,6 +7,95 @@
     <title>Genie_informatique_L2_UAC</title>
     <link rel="stylesheet" href="Assets/style.css">
     <link rel="stylesheet" href="Assets/script.js">
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #f5f5f5;
+          margin: 0;
+          padding: 0;
+        }
+        .container {
+          max-width: 800px;
+          margin: auto;
+          padding: 20px;
+          background: white;
+          margin-top: 30px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .container h2{
+            color: blue;
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        input, textarea, select {
+          width: 100%;
+          padding: 10px;
+          margin: 5px 0 15px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          box-sizing: border-box;
+        }
+        button {
+          padding: 10px 20px;
+          background: #003366;
+          border: none;
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:hover {
+          background: blue;
+        }
+        .profile {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 10px;
+          flex-wrap: wrap;
+        }
+        .profile img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+        .article, .comment {
+          border: 1px solid #ddd;
+          padding: 10px;
+          margin-top: 10px;
+          border-radius: 5px;
+          overflow-wrap: break-word;
+        }
+        .comment {
+          margin-left: 10px;
+          background: #f9f9f9;
+        }
+        img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+          .container {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 0;
+            box-shadow: none;
+          }
+          button {
+            width: 100%;
+            margin-bottom: 10px;
+          }
+          .comment {
+            margin-left: 10px;
+          }
+          h3{
+            color: blue;
+          }
+        }
+      </style>
 </head>
 <body>
     <header>
@@ -46,5 +135,193 @@
             </div>
         </nav>
     </header><br><br><br>
+
+    <div class="container">
+        <div class="grosTitle">
+            <marquee behavior="scroll" direction="right" style="font-size: 2rem; font-weight:bold;color:blue">🏋️‍♂️BIENVENUE A NOTRE FORUM G.I L2 UAC🏋️‍♂️</marquee>
+          </div>
+    
+        <div id="auth-section" class="titleh3">
+          <h3 style="color: blue;">Créer un compte / Se connecter</h3>
+          <input type="text" id="username" placeholder="Identifiant">
+          <input type="password" id="password" placeholder="Mot de passe">
+          <input type="file" id="photo">
+          <button onclick="register()">Créer un compte</button>
+          <button onclick="login()">Se connecter</button>
+        </div>
+    
+        <div id="forum-section" style="display:none;">
+          <div class="profile" id="user-info"></div>
+          <textarea id="article-content" placeholder="Écris quelque chose..."></textarea>
+          <input type="file" id="article-image">
+          <button onclick="postArticle()">Publier</button>
+          <div id="articles"></div>
+        </div>
+      </div>
+    
+      <script>
+        let currentUser = null;
+    
+        function register() {
+          const username = document.getElementById('username').value.trim();
+          const password = document.getElementById('password').value;
+          const photo = document.getElementById('photo').files[0];
+    
+          if (!username || !password || !photo) return alert("Veuillez remplir tous les champs et ajouter une photo");
+    
+          const reader = new FileReader();
+          reader.onload = function() {
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            if (users[username]) return alert("Cet identifiant existe déjà");
+    
+            users[username] = { password, photo: reader.result };
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Compte créé avec succès !");
+          };
+          reader.readAsDataURL(photo);
+        }
+    
+        function login() {
+          const username = document.getElementById('username').value.trim();
+          const password = document.getElementById('password').value;
+          const users = JSON.parse(localStorage.getItem('users')) || {};
+    
+          if (!users[username] || users[username].password !== password) {
+            return alert("Identifiants incorrects");
+          }
+    
+          currentUser = { username, photo: users[username].photo };
+          document.getElementById('auth-section').style.display = 'none';
+          document.getElementById('forum-section').style.display = 'block';
+          document.getElementById('user-info').innerHTML = `
+            <img src="${currentUser.photo}">
+            <strong>${currentUser.username}</strong>
+          `;
+          afficherArticles();
+        }
+    
+        function postArticle() {
+          const content = document.getElementById('article-content').value.trim();
+          const imageFile = document.getElementById('article-image').files[0];
+    
+          if (!content && !imageFile) return alert("Veuillez écrire un message ou ajouter une image");
+    
+          const reader = new FileReader();
+          reader.onload = function() {
+            const articles = JSON.parse(localStorage.getItem('articles')) || [];
+            articles.unshift({
+              id: Date.now(),
+              username: currentUser.username,
+              photo: currentUser.photo,
+              content,
+              image: reader.result || null,
+              comments: []
+            });
+            localStorage.setItem('articles', JSON.stringify(articles));
+            document.getElementById('article-content').value = "";
+            document.getElementById('article-image').value = "";
+            afficherArticles();
+          };
+    
+          if (imageFile) {
+            reader.readAsDataURL(imageFile);
+          } else {
+            reader.onload();
+          }
+        }
+    
+        function afficherArticles() {
+          const container = document.getElementById('articles');
+          container.innerHTML = "";
+          const articles = JSON.parse(localStorage.getItem('articles')) || [];
+    
+          articles.forEach(article => {
+            const div = document.createElement('div');
+            div.className = "article";
+            div.innerHTML = `
+              <div class="profile">
+                <img src="${article.photo}">
+                <strong>${article.username}</strong>
+              </div>
+              <p>${article.content}</p>
+              ${article.image ? `<img src="${article.image}" alt="Image publiée">` : ""}
+              ${article.username === currentUser.username ? `<button onclick="supprimerArticle(${article.id})">Supprimer</button>` : ""}
+              <div>
+                <input placeholder="Commenter..." onkeypress="if(event.key==='Enter'){ajouterCommentaire(${article.id}, this.value); this.value='';}">
+              </div>
+              ${article.comments.map(c => `
+                <div class="comment" oncontextmenu="supprimerCommentaire(${article.id}, ${c.id})">
+                  <div class="profile">
+                    <img src="${c.photo}">
+                    <strong>${c.username}</strong>
+                  </div>
+                  <p>${c.text}</p>
+                  <div>
+                    <input placeholder="Répondre..." onkeypress="if(event.key==='Enter'){ajouterReponse(${article.id}, ${c.id}, this.value); this.value='';}">
+                  </div>
+                  ${c.responses ? c.responses.map(r => `
+                    <div class="comment" style="margin-left: 20px;">
+                      <div class="profile">
+                        <img src="${r.photo}">
+                        <strong>${r.username}</strong>
+                      </div>
+                      <p>${r.text}</p>
+                    </div>`).join('') : ''}
+                </div>`).join('')}
+            `;
+            container.appendChild(div);
+          });
+        }
+    
+        function supprimerArticle(id) {
+          let articles = JSON.parse(localStorage.getItem('articles')) || [];
+          articles = articles.filter(a => a.id !== id || a.username !== currentUser.username);
+          localStorage.setItem('articles', JSON.stringify(articles));
+          afficherArticles();
+        }
+    
+        function ajouterCommentaire(articleId, text) {
+          let articles = JSON.parse(localStorage.getItem('articles')) || [];
+          const index = articles.findIndex(a => a.id === articleId);
+          if (index >= 0) {
+            articles[index].comments.push({
+              id: Date.now(),
+              username: currentUser.username,
+              photo: currentUser.photo,
+              text,
+              responses: []
+            });
+            localStorage.setItem('articles', JSON.stringify(articles));
+            afficherArticles();
+          }
+        }
+    
+        function ajouterReponse(articleId, commentId, text) {
+          let articles = JSON.parse(localStorage.getItem('articles')) || [];
+          const articleIndex = articles.findIndex(a => a.id === articleId);
+          if (articleIndex >= 0) {
+            const commentIndex = articles[articleIndex].comments.findIndex(c => c.id === commentId);
+            if (commentIndex >= 0) {
+              articles[articleIndex].comments[commentIndex].responses.push({
+                username: currentUser.username,
+                photo: currentUser.photo,
+                text
+              });
+              localStorage.setItem('articles', JSON.stringify(articles));
+              afficherArticles();
+            }
+          }
+        }
+    
+        function supprimerCommentaire(articleId, commentId) {
+          let articles = JSON.parse(localStorage.getItem('articles')) || [];
+          const articleIndex = articles.findIndex(a => a.id === articleId);
+          if (articleIndex >= 0) {
+            articles[articleIndex].comments = articles[articleIndex].comments.filter(c => c.id !== commentId || c.username !== currentUser.username);
+            localStorage.setItem('articles', JSON.stringify(articles));
+            afficherArticles();
+          }
+        }
+      </script>
 </body>
 </html>
