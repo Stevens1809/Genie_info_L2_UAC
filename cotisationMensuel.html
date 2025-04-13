@@ -251,14 +251,19 @@
   contributions.forEach((contrib, index) => {
     let row = document.createElement('tr');
 
+    let actions = '';
+    if (utilisateurConnecte === 'admin') {
+      actions = `
+        <button onclick="modifierContribution(${index})">Modifier</button>
+        <button onclick="supprimerEtRafraichir(${index})">Supprimer</button>
+      `;
+    }
+
     row.innerHTML = `
       <td>${contrib.nom}</td>
       <td>${contrib.mois}</td>
       <td>${contrib.montant}</td>
-      <td>
-        <button onclick="modifierContribution(${index})">Modifier</button>
-        <button onclick="supprimerEtRafraichir(${index})">Supprimer</button>
-      </td>
+      <td>${actions}</td>
     `;
     tbody.appendChild(row);
   });
@@ -267,6 +272,8 @@
 }
 
 function modifierContribution(index) {
+  if (utilisateurConnecte !== 'admin') return;
+
   let contributions = JSON.parse(localStorage.getItem('contributions')) || [];
   let contrib = contributions[index];
   document.getElementById('nom_contrib').value = contrib.nom;
@@ -278,6 +285,8 @@ function modifierContribution(index) {
 }
 
 function supprimerEtRafraichir(index) {
+  if (utilisateurConnecte !== 'admin') return;
+
   if (confirm("Voulez-vous vraiment supprimer cette contribution ?")) {
     supprimerContribution(index);
     afficherContributions();
