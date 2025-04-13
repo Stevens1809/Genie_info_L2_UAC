@@ -94,6 +94,17 @@
           h3{
             color: blue;
           }
+          .chat-btn{
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            width: 20px;
+            display: flex;
+            justify-content: flex-end;
+            background-color: #003366;
+
+          }
         }
       </style>
 </head>
@@ -140,14 +151,17 @@
         <div class="grosTitle">
             <marquee behavior="scroll" direction="right" style="font-size: 2rem; font-weight:bold;color:blue">🏋️‍♂️BIENVENUE A NOTRE FORUM G.I L2 UAC🏋️‍♂️</marquee>
           </div>
+          <a href="https://chat.openai.com" target="_blank" style="display: flex; justify-content:center"><img src="Assets/img/chatbot.png" alt="ia" title="ChatBot" width="40px" ></a>
     
         <div id="auth-section" class="titleh3">
           <h3 style="color: blue;">Créer un compte / Se connecter</h3>
           <input type="text" id="username" placeholder="Identifiant">
           <input type="password" id="password" placeholder="Mot de passe">
+          <input type="checkbox" id="voir-mdp" onclick="afficherMotDePasse()">
           <input type="file" id="photo">
           <button onclick="register()">Créer un compte</button>
           <button onclick="login()">Se connecter</button>
+          
         </div>
     
         <div id="forum-section" style="display:none;">
@@ -156,9 +170,13 @@
           <input type="file" id="article-image">
           <button onclick="postArticle()">Publier</button>
           <div id="articles"></div>
+          
         </div>
       </div>
-    
+      <div class="chat-btn">
+        
+      </div>
+     
       <script>
         let currentUser = null;
     
@@ -321,6 +339,11 @@
             localStorage.setItem('articles', JSON.stringify(articles));
             afficherArticles();
           }
+        }
+
+        function afficherMotDePasse(){
+          const mdpInput=document.getElementById("password");
+          mdpInput.type = mdpInput.type === "password" ? "text" : "password";
         }
       </script>
 </body>
