@@ -7,6 +7,47 @@
     <title>Genie_informatique_L2_UAC</title>
     <link rel="stylesheet" href="Assets/style.css">
     <link rel="stylesheet" href="Assets/script.js">
+    <style>
+        body{
+    font-family: arial, sans-serif;
+}
+.dropdown{
+    position: relative;
+    display: inline-block;
+}
+.dropbtn{
+    background-color: #2926fa;
+    color: white;
+    padding: 16px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.dropdown-content a{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a img{
+    width: 100%;
+    height: auto;
+}
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
+
+    </style>
 </head>
 <body>
     <header>
@@ -21,7 +62,14 @@
                             <li><a href="cours_suivis.html">Cours Suivis</a></li>
                             <li><a href="cours_non_suivis.html">Cours Non Suivis</a></li>
                             <li><a href="nosProjets.html">Nos Projets</a></li>
-                            <li><a href="nosTraveau.html">Nos Travaux</a></li>
+                            <li><a href="nosTraveau.html">Nos Travaux</a>
+                                <ul>
+                                    <li><a href="nosTravPr.html">Nos Travaux Pratique</a></li>
+                                    <li><a href="nosTrvDirig.html">Nos Travaux Diriger</a></li>
+                                    <li><a href="aureTrv.html">Autres</a></li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </li>
 
@@ -46,5 +94,14 @@
             </div>
         </nav>
     </header><br><br><br>
+
+    <div class="dropdown">
+        <button class="dropbtn">Nos travaux</button>
+        <div class="dropdown-content">
+            <a href="pratique.html"><img src="Assets/img/1.png"  width="150" height="110"></a>
+            <a href="dirige.html"><img src="Assets/img/2.png"  width="150" height="110"></a>
+            <a href="interro.html"><img src="Assets/img/3.png"  width="150" height="110"></a>
+        </div>
+    </div>
 </body>
 </html>
