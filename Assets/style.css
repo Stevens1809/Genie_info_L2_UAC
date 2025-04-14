@@ -1,0 +1,187 @@
+:root {
+    --bleu-fonce: #002240;
+    --bleu-clair: #007acc;
+    --blanc: #ffffff;
+    --gris: #f1f1f1;
+    --jaune: #ffc107;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  body {
+    background-color: var(--gris);
+    color: #222;
+  }
+
+  /* Zone logos */
+  .logos {
+    background-color: var(--bleu-fonce);
+    color: var(--blanc);
+    text-align: center;
+    padding: 20px;
+  }
+
+  .logo_accueil_uac img,
+  .logo_uac img,
+  .logo_poly img {
+    border-radius: 6px;
+    margin: 5px;
+    box-shadow: 0 0 10px rgba(0, 207, 255, 0.4);
+  }
+
+  .logo_presentation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  .texte_logo h2, .texte_logo h1 {
+    margin: 5px 0;
+  }
+
+  /* Header simple */
+  header {
+    background-color: var(--bleu-clair);
+    color: var(--blanc);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    flex-wrap: wrap;
+  }
+
+  .espace_etudiant {
+    font-weight: bold;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+
+  nav a {
+    color: var(--blanc);
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  nav a:hover {
+    color: #ffc107;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--blanc);
+  }
+
+  @media (max-width: 768px) {
+    nav ul {
+      flex-direction: column;
+      display: none;
+      background-color: var(--bleu-clair);
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    nav.active ul {
+      display: flex;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+  /* Mot de bienvenu */
+  .bienvenu {
+    display: flex;
+    justify-content: space-between;
+  }
+  .logo-L2GI {
+    max-width: 95%;
+    border-radius: 50px;
+    margin-top: 1.5%;
+    margin-left: 3%;
+  }
+
+  /* Main */
+  main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  section {
+    margin-bottom: 40px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 1%;
+  }
+
+  .card {
+    background-color: var(--blanc);
+    padding: 15px;
+    border-left: 4px solid var(--bleu-clair);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .cta {
+    background: var(--jaune);
+    color: #222;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  footer {
+    background-color: #333;
+    color: var(--blanc);
+    text-align: center;
+    padding: 15px;
+  }
+
+  /* Cookies */
+  .cookie-banner {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #444;
+    color: white;
+    padding: 10px 15px;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .cookie-banner button {
+    background-color: var(--jaune);
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
