@@ -10,14 +10,16 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="navbar">
+            <div class="logo">Genie Informatique</div>
+            
             <div>
-                <ul>
+                <ul class="menu" id="menu">
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="forum.html">Forum</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="cours.html">Cours</a>
-                        <ul>
+                    <li class="has-submenu"><a href="cours.html">Cours <span class="arrow">&#9656;</span></a>
+                        <ul class="submenu">
                             <li><a href="cours_suivis.html">Cours Suivis</a></li>
                             <li><a href="cours_non_suivis.html">Cours Non Suivis</a></li>
                             <li><a href="nosProjets.html">Nos Projets</a></li>
@@ -25,8 +27,8 @@
                         </ul>
                     </li>
 
-                    <li><a href="apropos.html">Apropos</a>
-                        <ul>
+                    <li class="has-submenu"><a href="apropos.html">Apropos <span class="arrow">&#9656;</span></a>
+                        <ul class="submenu">
                             <li><a href="galleriePhotos.html">Gallerie Photo</a></li>
                             <li><a href="equipe.html">Equipe</a></li>
                             <li><a href="information.html">Information</a></li>
@@ -35,8 +37,8 @@
                             
                         </ul>
                     </li>
-                    <li><a href="divers.html">Divers</a>
-                        <ul>
+                    <li class="has-submenu"><a href="divers.html">Divers <span class="arrow">&#9656;</span></a>
+                        <ul class="submenu">
                             <li><a href="cotisationMensuel.html">Cotisation Mensuel</a></li>
                             <li><a href="bibliothequeDesRessources.html">Bibliotheque de Ressource</a></li>
                             <li><a href="horaire.html">Horraire</a></li> 
@@ -44,7 +46,10 @@
                     </li>
                 </ul>
             </div>
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
         </nav>
     </header><br><br><br>
+ 
+    <script src="Assets/script.js"></script>
 </body>
 </html>
