@@ -80,44 +80,66 @@
       </style>
 </head>
 <body>
+    <!-- Logos -->
+    <div class="logos">
+      <div class="logo_accueil_uac">
+        <img src="Assets/img/uaclogo.png" alt="logo uac" width="150">
+      </div>
+      <div class="logo_presentation">
+        <div class="logo_uac">
+          <img src="Assets/img/LOGO UAC.jpg" alt="logo uac" width="90">
+        </div>
+        <div class="texte_logo">
+          <h2>FACULTÉ DE SCIENCES ET TECHNOLOGIES</h2>
+          <h1>L2 GÉNIE INFORMATIQUE</h1>
+        </div>
+        <div class="logo_poly">
+          <img src="Assets/img/poly logo.jpg" alt="logo poly" width="80">
+        </div>
+      </div>
+    </div>
+  
+    <!-- Header simple avec menu responsive -->
     <header>
-        <nav>
-            <div>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="forum.html">Forum</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="cours.html">Cours</a>
-                        <ul>
-                            <li><a href="cours_suivis.html">Cours Suivis</a></li>
-                            <li><a href="cours_non_suivis.html">Cours Non Suivis</a></li>
-                            <li><a href="nosProjets.html">Nos Projets</a></li>
-                            <li><a href="nosTraveau.html">Nos Travaux</a></li>
-                        </ul>
-                    </li>
+      <nav class="navbar">
+          <div class="logo2">Genie Informatique</div>
+          
+          <div>
+              <ul class="menu" id="menu">
+                  <li><a href="index.html">Accueil</a></li>
+                  <li><a href="forum.html">Forum</a></li>
+                  <li><a href="contact.html">Contact</a></li>
+                  <li class="has-submenu"><a href="cours.html">Cours <span class="arrow">&#9656;</span></a>
+                      <ul class="submenu">
+                          <li><a href="cours_suivis.html">Cours Suivis</a></li>
+                          <li><a href="cours_non_suivis.html">Cours Non Suivis</a></li>
+                          <li><a href="nosProjets.html">Nos Projets</a></li>
+                          <li><a href="nosTraveau.html">Nos Travaux</a></li>
+                      </ul>
+                  </li>
 
-                    <li><a href="apropos.html">Apropos</a>
-                        <ul>
-                            <li><a href="galleriePhotos.html">Gallerie Photo</a></li>
-                            <li><a href="equipe.html">Equipe</a></li>
-                            <li><a href="information.html">Information</a></li>
-                            <li><a href="notreObjectif.html">Notre Objectif</a></li>
+                  <li class="has-submenu"><a href="apropos.html">Apropos <span class="arrow">&#9656;</span></a>
+                      <ul class="submenu">
+                          <li><a href="galleriePhotos.html">Gallerie Photo</a></li>
+                          <li><a href="equipe.html">Equipe</a></li>
+                          <li><a href="information.html">Information</a></li>
+                          <li><a href="notreObjectif.html">Notre Objectif</a></li>
 
-                            
-                        </ul>
-                    </li>
-                    <li><a href="divers.html">Divers</a>
-                        <ul>
-                            <li><a href="cotisationMensuel.html">Cotisation Mensuel</a></li>
-                            <li><a href="bibliothequeDesRessources.html">Bibliotheque de Ressource</a></li>
-                            <li><a href="horaire.html">Horraire</a></li> 
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header><br><br><br>
-
+                          
+                      </ul>
+                  </li>
+                  <li class="has-submenu"><a href="divers.html">Divers <span class="arrow">&#9656;</span></a>
+                      <ul class="submenu">
+                          <li><a href="cotisationMensuel.html">Cotisation Mensuel</a></li>
+                          <li><a href="bibliothequeDesRessources.html">Bibliotheque de Ressource</a></li>
+                          <li><a href="horaire.html">Horraire</a></li> 
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+          <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+      </nav>
+  </header><br><br><br>
     <div class="logoconnexion">
         <div>
           <img src="logo.png" alt="" width="80px">

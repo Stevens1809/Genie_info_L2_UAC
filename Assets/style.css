@@ -46,69 +46,114 @@
     margin: 5px 0;
   }
 
-  /* Header simple */
-  header {
-    background-color: var(--bleu-clair);
-    color: var(--blanc);
+  
+  
+  
+  .navbar {
+    background: #003366;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    flex-wrap: wrap;
+    position: relative;
   }
-
-  .espace_etudiant {
+  
+  .logo2 {
+    font-size: 1.5em;
     font-weight: bold;
+    color: white;
   }
-
-  nav ul {
+  
+  .menu-toggle {
+    font-size: 26px;
+    display: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .menu {
     list-style: none;
     display: flex;
-    gap: 15px;
+    gap: 20px;
   }
-
-  nav a {
-    color: var(--blanc);
+  
+  .menu li {
+    position: relative;
+  }
+  
+  .menu a {
     text-decoration: none;
-    font-weight: bold;
+    color: white;
+    padding: 10px;
+    display: block;
   }
-
-  nav a:hover {
-    color: #ffc107;
+  
+  .menu .arrow {
+    margin-left: 5px;
+    font-size: 12px;
   }
-
-  /* Hamburger */
-  .hamburger {
+  
+  .submenu {
     display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 4px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #004080;
+    min-width: 150px;
+    font-style: none;
   }
-
-  .hamburger span {
-    width: 25px;
-    height: 3px;
-    background: var(--blanc);
+  
+  .submenu li {
+    width: 100%;
   }
-
+  
+  .has-submenu:hover .submenu {
+    display: block;
+  }
+  
+  /* Version mobile */
   @media (max-width: 768px) {
-    nav ul {
+    .menu-toggle {
+      display: block;
+    }
+  
+    .menu {
       flex-direction: column;
+      align-items: center;
       display: none;
-      background-color: var(--bleu-clair);
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
+      width: 100%;
+      background: #002244;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      z-index: 1000;
     }
-
-    nav.active ul {
+  
+    .menu.active {
       display: flex;
     }
-
-    .hamburger {
-      display: flex;
+  
+    .submenu {
+      position: static;
+      background: #003366;
+      display: none;
+    }
+  
+    .has-submenu.open .submenu {
+      display: block;
+    }
+  
+    .has-submenu .arrow {
+      float: right;
+      transition: transform 0.3s;
+    }
+  
+    .has-submenu.open .arrow {
+      transform: rotate(90deg);
     }
   }
+
+  
   /* Mot de bienvenu */
   .bienvenu {
     display: flex;
